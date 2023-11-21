@@ -4,12 +4,15 @@ import morgan from "morgan";
 import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import route from "./routes/index.route.js";
 const app = express();
-// Get the directory name
+const port = 3000;
 
+// Get the directory name
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+//static file
 app.use(express.static(path.join(__dirname, "public")));
 
 //http logger
@@ -19,18 +22,15 @@ app.use(morgan("combined"));
 app.engine(
   ".hbs",
   engine({
-    extname: ".hbs",
+    extname: ".hbs", //config extention name
   })
 );
 app.set("view engine", ".hbs");
 app.set("views", path.join(__dirname, "resources/views"));
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+//Route init khoi tao tuyen duong
+route(app);
 
-app.get("/news", (req, res) => {
-  res.render("news");
-});
-
-app.listen(3000);
+app.listen(port, () =>
+  console.log(`app listening at http://localhost:${port}`)
+);
