@@ -5,7 +5,16 @@ import path from "path";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import route from "./routes/index.route.js";
+import connect from "./config/db/index.js";
+import bodyParser from "body-parser";
 const app = express();
+// ✅ Register the bodyParser middleware here
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 const port = 3000;
 
 // Get the directory name
@@ -26,11 +35,15 @@ app.engine(
   })
 );
 app.set("view engine", ".hbs");
-app.set("views", path.join(__dirname, "resources/views"));
+app.set("views", path.join(__dirname, "resources", "views"));
 
 //Route init khoi tao tuyen duong
 route(app);
 
+//Connect db
+connect();
+
+//start server
 app.listen(port, () =>
   console.log(`app listening at http://localhost:${port}`)
 );

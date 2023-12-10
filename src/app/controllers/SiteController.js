@@ -1,7 +1,15 @@
+import Course from "../models/Course.js";
+import dataHandler from "../../util/mongoose.js";
 class SiteController {
   //[GET] /home
-  index(req, res) {
-    res.render("home");
+  async index(req, res) {
+    try {
+      let courses = await Course.find();
+      courses = dataHandler.multipleMongooseToObject(courses);
+      res.render("home", { courses });
+    } catch (error) {
+      res.send("ERROR");
+    }
   }
   //[GET] /search
   search(req, res) {
