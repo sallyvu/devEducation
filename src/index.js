@@ -7,7 +7,12 @@ import { fileURLToPath } from "url";
 import route from "./routes/index.route.js";
 import connect from "./config/db/index.js";
 import bodyParser from "body-parser";
+import methodOverride from "method-override";
 const app = express();
+
+// override with POST having ?_method=PUT
+app.use(methodOverride("_method"));
+
 // ✅ Register the bodyParser middleware here
 app.use(bodyParser.json());
 app.use(
@@ -32,6 +37,9 @@ app.engine(
   ".hbs",
   engine({
     extname: ".hbs", //config extention name
+    helpers: {
+      sum: (a, b) => a + b,
+    },
   })
 );
 app.set("view engine", ".hbs");

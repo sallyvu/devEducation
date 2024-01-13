@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
-import slugGenerator from "mongoose-slug-updater/lib/slug-generator.js";
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-//innitialization slug plugin
-mongoose.plugin(slugGenerator);
-
 const CourseSchema = new Schema(
   {
     id: ObjectId,

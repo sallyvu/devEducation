@@ -1,7 +1,17 @@
-class MyController {
+import Course from "../models/Course.js";
+import dataHandler from "../../util/mongoose.js";
+class MeController {
   //[GET] stored-courses
-  show(req, res) {
-    res.send("Hello");
+
+  async show(req, res) {
+    try {
+      let courses = await Course.find();
+      courses = dataHandler.multipleMongooseToObject(courses);
+      res.render("me/stored-courses", { courses });
+    } catch {
+      res.send("ERROR");
+    }
   }
 }
-export default MyController;
+
+export default MeController;

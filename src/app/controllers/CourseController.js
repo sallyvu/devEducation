@@ -26,5 +26,29 @@ class CourseController {
       res.send("ERROR");
     }
   }
+  //[GET] courses/edit
+  async edit(req, res) {
+    try {
+      const courseId = req.params.id;
+      let course = await Course.findById(courseId);
+      course = dataHandler.mongooseToObject(course);
+      res.render("courses/edit", { course });
+    } catch {
+      res.send("ERROR");
+    }
+  }
+  //[PUT] courses/update
+  async update(req, res) {
+    try {
+      const courseId = req.params.id;
+      const updateDetails = req.body;
+      await Course.findByIdAndUpdate(courseId, updateDetails);
+      // course = dataHandler.mongooseToObject(course);
+      res.redirect("/me/stored/courses");
+    } catch {
+      res.send("ERROR");
+    }
+  }
 }
+
 export default CourseController;
