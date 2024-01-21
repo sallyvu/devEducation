@@ -7,5 +7,6 @@ courseRouter.get("/create", courseController.create);
 courseRouter.get("/:slug", courseController.show);
 courseRouter.get("/:id/edit", courseController.edit);
 courseRouter.put("/:id", courseController.update);
+courseRouter.delete("/:id", courseController.delete);
 
 export default courseRouter;

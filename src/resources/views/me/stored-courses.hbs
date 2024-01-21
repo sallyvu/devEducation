@@ -1,5 +1,5 @@
-<table class="table">
-
+<div class="mt-4 ms-4 mb-4">
+  <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -17,35 +17,44 @@
         <td>
           <a href="/course/{{this._id}}/edit" type="button" class="btn btn-primary">Edit</a>
           <!-- Button trigger modal -->
-          <a href="" type="button" class="btn btn-dark" data-toggle="modal" data-target="#delete-course-modal">Delete</a>
+          <a href="" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#delete-course-modal" data-bs-whatever = "{{this._id}}">Delete</a>
         </td>
       </tr>
       <tr>
     </tbody>
   {{/each}}
 </table>
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!-- Hidden delete confirm modal -->
+<div class="modal fade" id="delete-course-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm delete</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        ...
+        Are you sure that you want to delete the course?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <a  type="button" class="btn btn-danger" >Delete</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
     </div>
   </div>
 </div>
+</div>
+<!-- Hidden delete submit form -->
+<form name="delete-form"  method="POST"></form>
+
+<script>
+let btn = document.querySelector('.btn-dark')
+let courseId = btn.getAttribute("data-bs-whatever")
+let deleteBtn = document.querySelector('.btn-danger')
+let deleteForm = document.forms["delete-form"]
+console.log(deleteForm)
+deleteBtn.addEventListener('click', function () {
+deleteForm.action = `/course/${courseId}?_method=DELETE`
+deleteForm.submit()
+console.log(courseId)
+})
+</script>

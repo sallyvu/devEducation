@@ -22,8 +22,11 @@ class CourseController {
     try {
       await Course.create(req.body);
       res.redirect("/");
-    } catch {
-      res.send("ERROR");
+    } catch (error) {
+      console.error("Error creating course:", error.message);
+      console.error(error.stack); // Log the full stack trace
+      // Send a more informative response to the client
+      res.status(500).send("Internal Server Error");
     }
   }
   //[GET] courses/edit
@@ -37,14 +40,23 @@ class CourseController {
       res.send("ERROR");
     }
   }
-  //[PUT] courses/update
+  //[PUT] courses/id
   async update(req, res) {
     try {
       const courseId = req.params.id;
       const updateDetails = req.body;
+      updateDetails["slug"] = updateDetails.name;
       await Course.findByIdAndUpdate(courseId, updateDetails);
-      // course = dataHandler.mongooseToObject(course);
       res.redirect("/me/stored/courses");
+    } catch {
+      res.send("ERROR");
+    }
+  }
+  //[DELETE] courses/id
+  async delete(req, res) {
+    try {
+      await Course.deleteOne({ _id: req.params.id });
+      res.redirect("back");
     } catch {
       res.send("ERROR");
     }
