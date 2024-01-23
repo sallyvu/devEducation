@@ -6,7 +6,7 @@ async function connect() {
     );
     console.log("Connect successfully");
   } catch (error) {
-    console.log("Connect failure", message.error);
+    console.log("Connect failure", error.message);
   }
 }
 export default connect;
