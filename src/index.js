@@ -20,7 +20,7 @@ app.use(
     extended: true,
   })
 );
-const port = 3000;
+const port = 3001;
 
 // Get the directory name
 const __filename = fileURLToPath(import.meta.url);
