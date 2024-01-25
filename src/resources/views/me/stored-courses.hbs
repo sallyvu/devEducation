@@ -17,7 +17,7 @@
         <td>
           <a href="/course/{{this._id}}/edit" type="button" class="btn btn-primary">Edit</a>
           <!-- Button trigger modal -->
-          <a href="" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#delete-course-modal" data-bs-whatever = "{{this._id}}">Delete</a>
+          <a href="" type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#delete-course-modal" data-bs-id = "{{this._id}}">Delete</a>
         </td>
       </tr>
       <tr>
@@ -45,16 +45,18 @@
 </div>
 <!-- Hidden delete submit form -->
 <form name="delete-form"  method="POST"></form>
-
 <script>
-let btn = document.querySelector('.btn-dark')
-let courseId = btn.getAttribute("data-bs-whatever")
-let deleteBtn = document.querySelector('.btn-danger')
-let deleteForm = document.forms["delete-form"]
-console.log(deleteForm)
-deleteBtn.addEventListener('click', function () {
-deleteForm.action = `/course/${courseId}?_method=DELETE`
-deleteForm.submit()
-console.log(courseId)
-})
+  let btns = document.querySelectorAll('.btn-dark')
+  let deleteForm = document.forms["delete-form"]
+  let deleteBtn = document.querySelector('.btn-danger')
+  let courseId
+    for (const btn of btns) {
+      btn.addEventListener('click', function(){
+        courseId = btn.getAttribute("data-bs-id")
+      })
+      deleteBtn.addEventListener('click', function () {
+      deleteForm.action = `/course/${courseId}?_method=DELETE`
+      deleteForm.submit()
+    })
+}
 </script>
