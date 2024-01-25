@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+import slug from "mongoose-slug-updater";
+mongoose.plugin(slug);
 const ObjectId = Schema.ObjectId;
 
 const CourseSchema = new Schema(
